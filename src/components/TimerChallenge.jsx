@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import ResultModel from "./ResultModel.jsx";
 
 // let timer;
 export default function TimerChallenge({title ,targetTime}) {
@@ -17,20 +18,23 @@ export default function TimerChallenge({title ,targetTime}) {
         clearTimeout(timer.current);
     }
     return (
-    <section className="challenge">
-        <h2>{title}</h2>
-        {timerExpired && <p>You Lost!</p>}
-        <p className="challenge-time">
-            {targetTime} second{targetTime > 1 ? 's' : ''}
-        </p>
-        <p>
-            <button onClick={timerStarted ? handleStop : handleStart}>
-                {timerStarted ? "End Challange" : "Start Challenge"}
-            </button>
-        </p>
-        <p className={targetTime ? "active" : undefined}>
-            {timerStarted ? 'Timer is running...' :  '/ Timer inactive'}
-        </p>
-    </section>
+    <>
+        {timerExpired && <ResultModel title="Lost" targetTime={targetTime} />}
+        <section className="challenge">
+            <h2>{title}</h2>
+            {timerExpired && <p>You Lost!</p>}
+            <p className="challenge-time">
+                {targetTime} second{targetTime > 1 ? 's' : ''}
+            </p>
+            <p>
+                <button onClick={timerStarted ? handleStop : handleStart}>
+                    {timerStarted ? "End Challange" : "Start Challenge"}
+                </button>
+            </p>
+            <p className={targetTime ? "active" : undefined}>
+                {timerStarted ? 'Timer is running...' :  '/ Timer inactive'}
+            </p>
+        </section>
+    </>
     )
 }
