@@ -3,15 +3,17 @@ import ResultModel from "./ResultModel.jsx";
 
 // let timer;
 export default function TimerChallenge({title ,targetTime}) {
-    let timer = useRef();
+    const timer = useRef();
+    const dialog = useRef();
 
     const [timerStarted , setTimerStarted] = useState(false);
     const [timerExpired, setTimerExpired] = useState(false);
 
     function handleStart() {
-        timer.current = setTimeout(()=>
-        {setTimerExpired(true)},
-        targetTime * 1000);
+        timer.current = setTimeout(()=>{
+        setTimerExpired(true);
+        dialog.current.showModal();
+    }, targetTime * 1000);
         setTimerStarted(true);
     }    
     function handleStop() {
@@ -19,7 +21,7 @@ export default function TimerChallenge({title ,targetTime}) {
     }
     return (
     <>
-        {timerExpired && <ResultModel result="Lost" targetTime={targetTime} />}
+        <ResultModel ref={dialog} result="Lost" targetTime={targetTime} />
         <section className="challenge">
             <h2>{title}</h2>
             {timerExpired && <p>You Lost!</p>}
